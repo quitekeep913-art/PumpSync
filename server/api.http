@@ -1,0 +1,32 @@
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "name": "Project Owner",
+    "email": "owner@pumpsync.com",
+    "password": "mysecurepassword",
+    "role": "owner"
+}
+### Register API Test
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "name": "Project Owner",
+    "email": "owner@pumpsync.com",
+    "password": "mysecurepassword",
+    "role": "owner"
+}
+
+### Login API Test
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "owner@pumpsync.com",
+  "password": "mysecurepassword"
+}
+### Get User Profile (Protected Route)
+GET http://localhost:5000/auth/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6Im93bmVyIiwiaWF0IjoxNzkzMjcxNjI5LCJleHAiOjE3OTMzMDc2Mjl9.nirME-gReOlRRGuQiCrKLmJh6BQ1PzJ2q0K37-kmDgg
