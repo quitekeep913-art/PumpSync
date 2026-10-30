@@ -1,41 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Dashboard.css'; // Importing the CSS
 
 function Dashboard() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect runs automatically when the Dashboard component loads
   useEffect(() => {
     const fetchUserProfile = async () => {
-      // 1. Get the token we saved during login
       const token = localStorage.getItem('token');
-      
-      // 2. If no token is found, kick the user back to the login page
       if (!token) {
         navigate('/');
         return;
       }
-
       try {
-        // 3. Send the token to the backend to get user details
         const response = await axios.get('http://localhost:5000/auth/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
-        
-        // 4. Save the received user data into state
         setUserData(response.data.userData);
       } catch (error) {
-        console.error("Authentication failed:", error);
-        // If token is invalid or expired, clear it and redirect to login
         localStorage.removeItem('token');
         navigate('/');
       }
     };
-
     fetchUserProfile();
   }, [navigate]);
 
@@ -45,36 +33,61 @@ function Dashboard() {
   };
 
   return (
-    <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
-      <h2>PumpSync Dashboard</h2>
+    <div className="dashboard-container">
       
-      {/* Display user specific data if loaded */}
-      {userData ? (
-        <div style={{ backgroundColor: '#e9ecef', padding: '15px', borderRadius: '5px', marginBottom: '20px' }}>
-          <p style={{ margin: '0', fontSize: '18px' }}>
-            Welcome back, <strong style={{ textTransform: 'capitalize', color: '#007bff' }}>{userData.role}</strong>!
-          </p>
-        </div>
-      ) : (
-        <p>Loading user profile...</p>
-      )}
+      {/* Left Sidebar */}
+      <div className="sidebar">
+        <div className="sidebar-brand">PumpSync</div>
+        <ul className="sidebar-menu">
+          <li className="active">Overview</li>
+          <li>Manage Pumps</li>
+          <li>Fuel Inventory</li>
+          <li>Daily Reports</li>
+          <li>Settings</li>
+        </ul>
+      </div>
 
-      <p>Welcome to the control panel. Here you will manage pumps, fuel inventory, and reports.</p>
-      
-      <button 
-        onClick={handleLogout}
-        style={{ 
-          marginTop: '20px', 
-          padding: '10px 20px', 
-          backgroundColor: '#dc3545', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px', 
-          cursor: 'pointer' 
-        }}
-      >
-        Logout
-      </button>
+      {/* Right Main Content */}
+      <div className="main-content">
+        
+        {/* Top Navigation Bar */}
+        <div className="topbar">
+          <div className="topbar-welcome">
+            {userData ? (
+              <span>Welcome back, <span className="role-badge">{userData.role}</span>!</span>
+            ) : (
+              <span>Loading profile...</span>
+            )}
+          </div>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+
+        {/* Page Content */}
+        <div className="dashboard-content">
+          <h2 className="dashboard-title">System Overview</h2>
+          
+          {/* Summary Cards */}
+          <div className="cards-grid">
+            <div className="stat-card">
+              <h3>Total Pumps</h3>
+              <p className="value">4</p>
+            </div>
+            <div className="stat-card" style={{borderTopColor: '#2ecc71'}}>
+              <h3>Available Petrol</h3>
+              <p className="value">2,450 L</p>
+            </div>
+            <div className="stat-card" style={{borderTopColor: '#f1c40f'}}>
+              <h3>Available Diesel</h3>
+              <p className="value">1,800 L</p>
+            </div>
+            <div className="stat-card" style={{borderTopColor: '#9b59b6'}}>
+              <h3>Today's Sales</h3>
+              <p className="value">Rs 45,000</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
     </div>
   );
 }
