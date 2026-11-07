@@ -40,7 +40,7 @@ function Dashboard() {
         <div className="sidebar-brand">PumpSync</div>
         <ul className="sidebar-menu">
           <li className="active">Overview</li>
-          <li>Manage Pumps</li>
+          <li onClick={() => navigate('/manage-pumps')}>Manage Pumps</li>
           <li>Fuel Inventory</li>
           <li>Daily Reports</li>
           <li>Settings</li>
