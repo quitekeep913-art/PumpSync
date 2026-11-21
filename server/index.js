@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/auth', require('./routes/auth'));
 app.use('/api/pumps', require('./routes/pump'));
+app.use('/api/inventory', require('./routes/inventory'));
 
 // Start server
 app.listen(PORT, () => {
