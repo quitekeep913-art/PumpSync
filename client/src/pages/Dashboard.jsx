@@ -6,7 +6,44 @@ import './Dashboard.css'; // Importing the CSS
 function Dashboard() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    totalPumps: 0,
+    petrolStock: 0,
+    dieselStock: 0,
+    todaySales: 0,
+  });
 
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        const [pumpsRes, invRes, salesRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/pumps/all'),
+          axios.get('http://localhost:5000/api/inventory/all'),
+          axios.get('http://localhost:5000/api/sales/all'),
+        ]);
+
+        const petrolTank = invRes.data.find((t) => t.fuelType === 'Petrol');
+        const dieselTank = invRes.data.find((t) => t.fuelType === 'Diesel');
+
+        // Calculate today's sales total
+        const today = new Date().toDateString();
+        const todayRevenue = salesRes.data
+          .filter((s) => new Date(s.saleDate).toDateString() === today)
+          .reduce((sum, s) => sum + Number(s.totalAmount), 0);
+
+        setStats({
+          totalPumps: pumpsRes.data.length,
+          petrolStock: petrolTank ? Number(petrolTank.currentStock) : 0,
+          dieselStock: dieselTank ? Number(dieselTank.currentStock) : 0,
+          todaySales: todayRevenue,
+        });
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+      }
+    };
+
+    fetchDashboardStats();
+  }, []);
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -67,24 +104,24 @@ function Dashboard() {
           <h2 className="dashboard-title">System Overview</h2>
           
           {/* Summary Cards */}
-          <div className="cards-grid">
-            <div className="stat-card">
-              <h3>Total Pumps</h3>
-              <p className="value">4</p>
-            </div>
-            <div className="stat-card" style={{borderTopColor: '#2ecc71'}}>
-              <h3>Available Petrol</h3>
-              <p className="value">2,450 L</p>
-            </div>
-            <div className="stat-card" style={{borderTopColor: '#f1c40f'}}>
-              <h3>Available Diesel</h3>
-              <p className="value">1,800 L</p>
-            </div>
-            <div className="stat-card" style={{borderTopColor: '#9b59b6'}}>
-              <h3>Today's Sales</h3>
-              <p className="value">Rs 45,000</p>
-            </div>
+        <div className="cards-grid">
+          <div className="stat-card">
+            <h3>Total Pumps</h3>
+            <p className="value">{stats.totalPumps}</p>
           </div>
+          <div className="stat-card" style={{ borderTopColor: '#2ecc71' }}>
+            <h3>Available Petrol</h3>
+            <p className="value">{stats.petrolStock.toLocaleString()} L</p>
+          </div>
+          <div className="stat-card" style={{ borderTopColor: '#f1c40f' }}>
+            <h3>Available Diesel</h3>
+            <p className="value">{stats.dieselStock.toLocaleString()} L</p>
+          </div>
+          <div className="stat-card" style={{ borderTopColor: '#9b59b6' }}>
+            <h3>Today's Sales</h3>
+            <p className="value">Rs {stats.todaySales.toLocaleString()}</p>
+          </div>
+        </div>
           
         </div>
       </div>
