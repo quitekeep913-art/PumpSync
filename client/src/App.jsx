@@ -5,6 +5,7 @@ import ManagePumps from './pages/ManagePumps';
 import FuelInventory from './pages/FuelInventory';
 import DailyReports from './pages/DailyReports';
 import Settings from './pages/Settings';
+import Fleet from './pages/Fleet';
 function App() {
   return (
     <Router>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/fuel-inventory" element={<FuelInventory/>} />
         <Route path="/daily-reports" element={<DailyReports />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/fleet" element={<Fleet />} />
       </Routes>
     </Router>
   );

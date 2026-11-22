@@ -81,6 +81,7 @@ function Dashboard() {
           <li onClick={() => navigate('/fuel-inventory')}>Fuel Inventory</li>
           <li onClick={() => navigate('/daily-reports')}>Daily Reports</li>
           <li onClick={() => navigate('/settings')}>Settings</li>
+          <li onClick={() => navigate('/fleet')}>Fleet & QR</li>
         </ul>
       </div>
 

@@ -20,6 +20,7 @@ app.use('/api/pumps', require('./routes/pump'));
 app.use('/api/inventory', require('./routes/inventory'));
 app.use('/api/sales', require('./routes/sales'));
 app.use('/api/settings', require('./routes/settings'));
+app.use('/api/fleet', require('./routes/fleet'));
 
 // Start server
 app.listen(PORT, () => {
