@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ManagePumps from './pages/ManagePumps';
 import FuelInventory from './pages/FuelInventory';
+import DailyReports from './pages/DailyReports';
 function App() {
   return (
     <Router>
@@ -11,6 +12,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/manage-pumps" element={<ManagePumps />} />
         <Route path="/fuel-inventory" element={<FuelInventory/>} />
+        <Route path="/daily-reports" element={<DailyReports />} />
       </Routes>
     </Router>
   );

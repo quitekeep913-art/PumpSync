@@ -42,7 +42,7 @@ function Dashboard() {
           <li className="active">Overview</li>
           <li onClick={() => navigate('/manage-pumps')}>Manage Pumps</li>
           <li onClick={() => navigate('/fuel-inventory')}>Fuel Inventory</li>
-          <li>Daily Reports</li>
+          <li onClick={() => navigate('/daily-reports')}>Daily Reports</li>
           <li>Settings</li>
         </ul>
       </div>
