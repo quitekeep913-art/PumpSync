@@ -80,7 +80,7 @@ function Dashboard() {
           <li onClick={() => navigate('/manage-pumps')}>Manage Pumps</li>
           <li onClick={() => navigate('/fuel-inventory')}>Fuel Inventory</li>
           <li onClick={() => navigate('/daily-reports')}>Daily Reports</li>
-          <li>Settings</li>
+          <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </div>
 
