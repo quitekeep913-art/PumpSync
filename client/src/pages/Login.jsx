@@ -29,7 +29,7 @@ function Login() {
           password,
           role,
         });
-        setMessage('Account registered successfully! Ab Sign In karein.');
+        setMessage('Account registered successfully! Please Sign In.');
         setIsRegister(false);
         setPassword('');
       } else {

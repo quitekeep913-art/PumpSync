@@ -165,10 +165,97 @@ const handleDeleteShift = async (shiftId) => {
       setStatusMessage(error.response?.data?.message || 'Failed to delete alert.');
     }
   };
+  const downloadCsv = (filename, headers, rows) => {
+    const escapeCell = (val) => {
+      const str = String(val ?? '');
+      return `"${str.replace(/"/g, '""')}"`;
+    };
+    const csvContent = [
+      headers.map(escapeCell).join(','),
+      ...rows.map((r) => r.map(escapeCell).join(',')),
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportReportCsv = () => {
+    const headers = ['Module', 'Title / Nozzle', 'Metric 1', 'Metric 2', 'Variance / Status', 'Notes / Details'];
+    const rows = [
+      ...shifts.map((s) => [
+        'Shift Reconciliation',
+        `${s.shiftName} (${s.nozzleLabel})`,
+        `Meter: ${s.openingReading} -> ${s.closingReading} | Sys: ${s.systemDispensedLiters}L`,
+        `Cash: ${s.cashCollected} / Exp: ${s.expectedCash}`,
+        `L Var: ${s.varianceLiters}L | Cash Var: ${s.varianceCash}`,
+        s.notes || '',
+      ]),
+      ...calibrations.map((c) => [
+        '5L Calibration',
+        c.nozzleLabel,
+        `Std: ${c.standardLiters}L`,
+        `Measured: ${c.measuredLiters}L`,
+        `${c.varianceLiters}L (${c.status})`,
+        c.notes || '',
+      ]),
+      ...alerts.map((a) => [
+        'Theft / Audit Alert',
+        a.alertType,
+        `Severity: ${a.severity}`,
+        a.isResolved ? 'Resolved' : 'Open',
+        a.isResolved ? 'Resolved' : 'Action Needed',
+        a.description,
+      ]),
+    ];
+
+    downloadCsv('pumpsync-audit-report.csv', headers, rows);
+  };
   const openAlertsCount = alerts.filter((a) => !a.isResolved).length;
 
   return (
     <div style={{ padding: '20px', maxWidth: '1120px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
+        <h1 style={{ margin: 0, fontSize: '24px', color: '#2c3e50' }}>Audit, Calibration & Reconciliation</h1>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            type="button"
+            onClick={handleExportReportCsv}
+            style={{
+              backgroundColor: '#27ae60',
+              color: '#fff',
+              border: 'none',
+              padding: '9px 14px',
+              borderRadius: '6px',
+              fontWeight: '600',
+              cursor: 'pointer',
+            }}
+          >
+            Export CSV Report
+          </button>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            style={{
+              backgroundColor: '#34495e',
+              color: '#fff',
+              border: 'none',
+              padding: '9px 14px',
+              borderRadius: '6px',
+              fontWeight: '600',
+              cursor: 'pointer',
+            }}
+          >
+            Print Report
+          </button>
+        </div>
+      </div>
       {/* Top Summary Bar */}
       <div
         style={{

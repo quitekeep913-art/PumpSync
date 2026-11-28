@@ -80,10 +80,10 @@ function Dashboard() {
           <li onClick={() => navigate('/manage-pumps')}>Manage Pumps</li>
           <li onClick={() => navigate('/fuel-inventory')}>Fuel Inventory</li>
           <li onClick={() => navigate('/daily-reports')}>Daily Reports</li>
-          <li onClick={() => navigate('/settings')}>Settings</li>
           <li onClick={() => navigate('/fleet')}>Fleet & QR</li>
           <li onClick={() => navigate('/fuel-entry')}>QR Fuel Entry</li>
           <li onClick={() => navigate('/reconciliation')}>Reconciliation & Alerts</li>
+           <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </div>
 
