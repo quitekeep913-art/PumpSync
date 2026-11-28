@@ -255,7 +255,27 @@ const Fleet = () => {
                   />
                 </div>
               )}
-
+              <div style={{ marginTop: '8px' }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(d.qrPayload);
+                        setMessage(`QR payload copied for ${d.driverName}.`);
+                      }}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #3498db',
+                        backgroundColor: '#ebf5fb',
+                        color: '#2980b9',
+                        cursor: 'pointer',
+                        fontWeight: '600',
+                        fontSize: '13px',
+                      }}
+                    >
+                      Copy QR Payload
+                    </button>
+                  </div>
               <button
                 type="button"
                 onClick={() => toggleStatus(d.id)}

@@ -21,6 +21,8 @@ app.use('/api/inventory', require('./routes/inventory'));
 app.use('/api/sales', require('./routes/sales'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/fleet', require('./routes/fleet'));
+app.use('/api/fuel-entry', require('./routes/fuelEntry'));
+app.use('/api/reconciliation', require('./routes/reconciliation'));
 
 // Start server
 app.listen(PORT, () => {

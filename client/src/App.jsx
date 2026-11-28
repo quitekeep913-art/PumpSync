@@ -6,6 +6,8 @@ import FuelInventory from './pages/FuelInventory';
 import DailyReports from './pages/DailyReports';
 import Settings from './pages/Settings';
 import Fleet from './pages/Fleet';
+import FuelEntry from './pages/FuelEntry';
+import Reconciliation from './pages/Reconciliation';
 function App() {
   return (
     <Router>
@@ -17,6 +19,8 @@ function App() {
         <Route path="/daily-reports" element={<DailyReports />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/fleet" element={<Fleet />} />
+        <Route path="/fuel-entry" element={<FuelEntry />} />
+        <Route path="/reconciliation" element={<Reconciliation />} />
       </Routes>
     </Router>
   );
