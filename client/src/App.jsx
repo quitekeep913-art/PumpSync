@@ -8,6 +8,7 @@ import Settings from './pages/Settings';
 import Fleet from './pages/Fleet';
 import FuelEntry from './pages/FuelEntry';
 import Reconciliation from './pages/Reconciliation';
+import FleetLimits from './pages/FleetLimits';
 function App() {
   return (
     <Router>
@@ -17,10 +18,11 @@ function App() {
         <Route path="/manage-pumps" element={<ManagePumps />} />
         <Route path="/fuel-inventory" element={<FuelInventory/>} />
         <Route path="/daily-reports" element={<DailyReports />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/fleet" element={<Fleet />} />
         <Route path="/fuel-entry" element={<FuelEntry />} />
         <Route path="/reconciliation" element={<Reconciliation />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/fleet-limits" element={<FleetLimits />} />
       </Routes>
     </Router>
   );
